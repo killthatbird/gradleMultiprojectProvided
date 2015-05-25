@@ -7,6 +7,7 @@ Gradle Multiproject with a Provided scope / configuration.  Running war from the
 4. Observe no 'tomcat' jars are in the war
 
 Now do in Eclipse:
+
 1. In Eclipse with Gradle plugin ... right-click > import > gradle and select the master project > build > select > ok
 2. Choose 'apir' project > right-click > run on server > piviol tc Server is find
 3. Choose 'pivotal tc Server ' > Browse Deployment Location
