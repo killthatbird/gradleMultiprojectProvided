@@ -1,11 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
-//        maven { url 'http://repo.spring.io/plugins-release' }
     }
-//    dependencies {
-//          classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
-//    }
 }
 
 allprojects {
@@ -13,32 +9,15 @@ allprojects {
     apply plugin: 'eclipse-wtp'
 }
 
-// configure(allprojects) {
-//     apply plugin: 'propdeps'
-//     apply plugin: 'propdeps-eclipse'
-// }
-
-// http://blog.codeaholics.org/2012/emulating-mavens-provided-scope-in-gradle/
-configurations {
-      provided
-}
-
-// sourceSets {
-//       main.compileClasspath += configurations.provided
-//       test.compileClasspath += configurations.provided
-//       test.runtimeClasspath += configurations.provided
-// }
-
-eclipse {
-      classpath {
-              // Add the provided configuration items to the Eclipse classpath
-              plusConfigurations += [ configurations.provided ]
-              // But don't export them
-              noExportConfigurations += [ configurations.provided ]
-      }
-}
-
 subprojects {
+}
+
+// Define the dependencies between the projects
+project(':ace2') {
+	configurations {
+	      provided
+	}
+	
     repositories {
         mavenCentral()
     }
@@ -47,14 +26,28 @@ subprojects {
 	    compile('org.apache.logging.log4j:log4j-slf4j-impl:2.2')
 		compile('org.apache.logging.log4j:log4j-api:2.2')
 		compile('org.apache.logging.log4j:log4j-core:2.2')
-	    compile('org.apache.tomcat:tomcat-catalina:8.0.22')	
+	    provided('org.apache.tomcat:tomcat-catalina:8.0.22')	
 	    testCompile('junit:junit:4.12')		
  	}
-}
 
-// Define the dependencies between the projects
-// project(':ace2') {
-// }
+	eclipse {
+	      classpath {
+	              // Add the provided configuration items to the Eclipse classpath
+	              plusConfigurations += [ configurations.provided ]
+	              // But don't export them
+	              noExportConfigurations += [ configurations.provided ]
+	      }
+	      
+	      eclipse.classpath.plusConfigurations.each { one ->
+			    println "plusConfigurations: $one"
+			    it.each { it2 ->
+			    	println " - $it2"
+			    }
+			}
+			configurations.provided.each { println "Provided - $it" }
+	}
+
+}
 
 project(':apir') {
 	apply plugin: 'war'
