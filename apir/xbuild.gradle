@@ -1,0 +1,41 @@
+buildscript {
+    //ext {
+    //    springBootVersion = '1.2.2.RELEASE'
+    //}
+    repositories {
+        mavenCentral()
+    }
+    //dependencies {
+    //    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    //}
+}
+
+//apply plugin: 'java'
+//apply plugin: 'eclipse-wtp'
+//apply plugin: 'spring-boot' 
+//apply plugin: 'war'
+
+
+war {
+    version = ''	// Leave it this way until up to changing context paths - '0.0.1-SNAPSHOT'
+    //rootSpec.exclude("**/*.jar")
+}
+
+repositories {
+    mavenCentral()
+    // Not everything is available in a Maven/Gradle repository.  Use a local 'libs/' directory for these.
+    flatDir {
+       dirs 'libs'
+   }
+}
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

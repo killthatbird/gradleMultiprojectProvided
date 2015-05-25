@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        mavenCentral()
+//        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+//    dependencies {
+//          classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+//    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse-wtp'
+}
+
+// configure(allprojects) {
+//     apply plugin: 'propdeps'
+//     apply plugin: 'propdeps-eclipse'
+// }
+
+// http://blog.codeaholics.org/2012/emulating-mavens-provided-scope-in-gradle/
+configurations {
+      provided
+}
+
+// sourceSets {
+//       main.compileClasspath += configurations.provided
+//       test.compileClasspath += configurations.provided
+//       test.runtimeClasspath += configurations.provided
+// }
+
+eclipse {
+      classpath {
+              // Add the provided configuration items to the Eclipse classpath
+              plusConfigurations += [ configurations.provided ]
+              // But don't export them
+              noExportConfigurations += [ configurations.provided ]
+      }
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+ 	dependencies {
+	    compile('org.apache.poi:poi:3.11')
+	    compile('org.apache.logging.log4j:log4j-slf4j-impl:2.2')
+		compile('org.apache.logging.log4j:log4j-api:2.2')
+		compile('org.apache.logging.log4j:log4j-core:2.2')
+	    compile('org.apache.tomcat:tomcat-catalina:8.0.22')	
+	    testCompile('junit:junit:4.12')		
+ 	}
+}
+
+// Define the dependencies between the projects
+// project(':ace2') {
+// }
+
+project(':apir') {
+	apply plugin: 'war'
+ 	dependencies {
+		compile project(':ace2')
+ 	}
+}
+
+compileJava {
+  sourceCompatibility = '1.8'
+  targetCompatibility = '1.8'
+}

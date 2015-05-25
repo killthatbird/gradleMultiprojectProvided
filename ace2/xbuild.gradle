@@ -1,0 +1,158 @@
+buildscript {
+    //ext {
+    //    springBootVersion = '1.2.2.RELEASE'
+    //}
+    repositories {
+        mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
+        
+    }
+    dependencies {
+    //    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+          classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.6'
+    }
+}
+
+plugins {
+  id 'java'
+  // Shadow creates an UberJar with the Ace2 classes and all the dependencies in the one
+  // ace2-shadow.jar.  It is easier and cleaner to deploy this to tomcat/lib.
+  id 'com.github.johnrengelman.shadow' version '1.2.1'
+}
+
+//apply plugin: 'java'
+//apply plugin: 'eclipse-wtp'
+
+//apply plugin: 'spring-boot' 
+//apply plugin: 'war'
+
+compileJava {
+  sourceCompatibility = '1.8'
+  targetCompatibility = '1.8'
+}
+
+//mainClassName = "au.com.apir.Gace2Application"
+
+// http://blog.codeaholics.org/2012/emulating-mavens-provided-scope-in-gradle/
+//configurations {
+// 	provided
+//}
+
+// sourceSets {
+// 	main.compileClasspath += configurations.provided
+//  	test.compileClasspath += configurations.provided
+//  	test.runtimeClasspath += configurations.provided
+// }
+
+// eclipse {
+// 	classpath {
+// 		// Add the provided configuration items to the Eclipse classpath
+// 		plusConfigurations += [ configurations.provided ]
+// 		// But don't export them
+// 		noExportConfigurations += [ configurations.provided ]
+// 	}
+// }
+
+repositories {
+    mavenCentral()
+    // Not everything is available in a Maven/Gradle repository.  Use a local 'libs/' directory for these.
+    flatDir {
+       dirs 'libs'
+   }
+}
+
+dependencies {
+//    compile("org.springframework.boot:spring-boot-starter-actuator")
+//    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+//    compile("org.springframework.boot:spring-boot-starter-data-rest")
+//    compile("org.springframework.boot:spring-boot-starter-jdbc")
+//    compile("org.springframework.boot:spring-boot-starter-jersey")
+//    compile("org.springframework.boot:spring-boot-starter-mail")
+//    compile("org.springframework.boot:spring-boot-starter-web")
+	
+// WANT THIS     compile('org.apache.poi:poi:3.11')
+// WANT THIS     compile('org.apache.poi:poi-ooxml:3.11')
+// WANT THIS     compile('org.glassfish.jersey.containers:jersey-container-servlet-core:2.17')
+// WANT THIS     compile('org.glassfish.jersey.containers:jersey-container-servlet:2.17')
+// WANT THIS     compile('commons-codec:commons-codec:1.9')
+// WANT THIS     compile('org.apache.axis:axis:1.4')
+// WANT THIS     compile('org.apache.axis:axis-jaxrpc:1.4')
+// WANT THIS     compile('org.apache.axis:axis-ant:1.4')
+// WANT THIS     compile('commons-discovery:commons-discovery:0.5')
+// WANT THIS     compile('org.apache.axis:axis-saaj:1.4')
+// WANT THIS     compile('axis:axis-wsdl4j:1.5.1')
+// WANT THIS     compile('org.hibernate:hibernate-ehcache:4.3.7.Final')
+// WANT THIS     compile('org.hibernate:hibernate-c3p0:4.3.7.Final')
+// WANT THIS     compile('commons-net:commons-net:3.3')
+// WANT THIS     compile('com.itextpdf:itextpdf:5.0.6')
+// WANT THIS     compile('org.codehaus.jackson:jackson-mapper-asl:1.9.13')
+// WANT THIS     compile('org.apache.httpcomponents:httpcore:4.4.1')
+// WANT THIS     compile('org.apache.httpcomponents:httpclient:4.4.1')
+// WANT THIS     compile('javax.servlet:jstl:1.2')
+// WANT THIS     compile('javax.mail:mail:1.4.7')
+// WANT THIS     compile('org.apache.commons:commons-lang3:3.4')
+// WANT THIS     compile('javax.faces:jsf-api:2.1')
+// WANT THIS     compile('servlets.com:cos:05Nov2002')
+// WANT THIS     compile('org.slf4j:slf4j-api:1.7.12')
+// WANT THIS 	compile('org.apache.logging.log4j:log4j-slf4j-impl:2.2')
+// WANT THIS 	compile('org.apache.logging.log4j:log4j-api:2.2')
+// WANT THIS 	compile('org.apache.logging.log4j:log4j-core:2.2')
+// WANT THIS 	compile('org.json:json:20141113')
+// WANT THIS 	compile('org.apache.lucene:lucene-core:1.9.1')
+
+// WANT THIS 	provided 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+// WANT THIS     provided 'javax.servlet:jsp-api:2.0'
+// WANT THIS     provided 'javax.servlet:servlet-api:2.5'
+// WANT THIS     provided 'org.apache.tomcat:tomcat-catalina:8.0.22'
+// WANT THIS     
+// WANT THIS     // Libraries that have no maven equivalent are saved in the project's libs/ directory
+// WANT THIS     compile name: 'secondstring-20030401'
+// WANT THIS     compile name: 'ojdbc14'
+// WANT THIS     compile name: 'jpedal_lgpl'
+// WANT THIS     compile name: 'pdfbox-app-1.8.9'
+// WANT THIS     //runtime name: 'ojdbc6'
+// WANT THIS     
+// WANT THIS     testRuntime('com.h2database:h2:1.4.187')
+// WANT THIS     //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+// WANT THIS     //testCompile("org.springframework.boot:spring-boot-starter-test")
+// WANT THIS     testCompile('junit:junit:4.12') 
+// WANT THIS     testCompile('com.icegreen:greenmail:1.4.1')
+}
+
+// The shadowJar is to create the dependencies jar since it is 10x bigger than the ace2.jar and with external
+// Production servers we need to avoid needing to xfer too much for each release.  Only xfer the
+// ace2-dependencies.jar when the dependencies change.
+shadowJar {
+  dependencies {
+  		// todo - the 'provided' configuration should somehow be used here
+    	exclude('au/com/apir/**')
+    	exclude(dependency('javax.ws.rs:javax.ws.rs-api:.*'))
+    	exclude(dependency('org.apache.tomcat:.*:.*'))
+    	exclude(dependency('javax.servlet:servlet-api:.*'))
+    	exclude(dependency('javax.servlet:jsp-api:.*'))
+  	}
+  	classifier='dependencies'
+}
+
+jar {
+	manifest {
+		def theDate = new Date().format("yyyy-MM-dd")
+		attributes 'Implementation-Title': 'Ace2',
+			'Implementation-Version': 1.0,
+			'Built-By': System.getProperty('user.name'),
+			'Built-Date': theDate,
+			'Built-JDK': System.getProperty('java.version')
+         	//'Main-Class': mainClassName
+	 }
+}
+
+// eclipse {
+//     classpath {
+         // containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         // containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    // }
+// }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

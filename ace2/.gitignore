@@ -1,0 +1,12 @@
+/bin/
+build/
+.settings/
+.gradle/
+.classpath
+.project
+src/main/resources/dynamicform/upload/
+logs/
+dependencies.txt
+build_orig.xml
+dependencies.txt
+

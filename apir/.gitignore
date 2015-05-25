@@ -1,0 +1,6 @@
+/build/
+apir.war
+.project
+.settings/
+.classpath
+.gradle/

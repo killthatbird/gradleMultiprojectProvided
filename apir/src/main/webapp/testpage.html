@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<TITLE>APIR Test Page</TITLE>
+<script type='text/javascript'>
+function refresh() {
+    if (parent.frames.testpage != null) {
+        parent.frames.testpage.location="testpage.jsp";
+    }
+    setTimeout("refresh()", 30000);
+}
+</script>
+</HEAD>
+<script type='text/javascript'>
+    refresh();
+</script>
+<body>
+  <iframe name="testpage" src="testpage.jsp"></iframe>
+</body>
+</HTML>

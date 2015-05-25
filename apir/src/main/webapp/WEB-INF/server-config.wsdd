@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+	xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+	xmlns:handler="http://xml.apache.org/axis/wsdd/providers/handler"
+	xmlns:xsi="http://schemas.xmlsoap.org/soap/encoding"
+	name="defaultClientConfig" xsi:type="deployment">
+	<globalConfiguration name="defaultClientConfig">
+		<requestFlow name="RequestFlow1" type="">
+			<handler name="Handler1"
+				type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session" />
+			</handler>
+			<handler name="Handler2"
+				type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request" />
+				<parameter name="extension" value=".jwr" />
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+	<handler name="URLMapper"
+		type="java:org.apache.axis.handlers.http.URLMapper" />
+	<handler name="LocalResponder"
+		type="java:org.apache.axis.transport.local.LocalResponder" />
+	<handler name="Authenticate"
+		type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+	<transport name="http" type="">
+		<requestFlow name="RequestFlow1" type="">
+			<handler name="Handler1" type="URLMapper" />
+			<handler name="Handler2"
+				type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</requestFlow>
+	</transport>
+	<transport name="local" type="">
+		<responseFlow name="ResponseFlow1" type="">
+			<handler name="Handler1" type="LocalResponder" />
+		</responseFlow>
+	</transport>
+<!--
+	<service name="AdminService" type="" provider="java:MSG">
+		<parameter name="allowedMethods" value="AdminService" />
+		<parameter name="enableRemoteAdmin" value="false" />
+		<parameter name="className" value="org.apache.axis.utils.Admin" />
+		<namespace>http://xml.apache.org/axis/wsdd/</namespace>
+	</service>
+	<service name="Version" type="" provider="java:RPC">
+		<parameter name="allowedMethods" value="getVersion" />
+		<parameter name="className" value="org.apache.axis.Version" />
+	</service>
+-->	
+	<!-- Disabled the spin surcharge web service
+		<service name="MessagingRegister" type="" provider="java:RPC"
+		style="rpc" use="encoded">
+		<parameter name="scope" value="Request"/>
+		<parameter name="className" value="au.com.apir.spinwebservice.MessagingRegisterBean"/>
+		<parameter name="allowedMethods" value="lookupAllMessagingRecords, lookupMessagingRecordBySPIN, lookupMessagingRecordBySPINMessageType"/>
+		<namespace>http://spinwebservice.apir.com.au</namespace>
+		<typeMapping xmlns:ns1="http://spinwebservice.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns1:MessagingRecord"
+		languageSpecificType="java:au.com.apir.spinwebservice.MessagingRecord"
+		serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" name="MessagingRecord"/>
+		<typeMapping xmlns:ns2="http://spinwebservice.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns2:ArrayOfMessagingRecord"
+		languageSpecificType="java:au.com.apir.spinwebservice.MessagingRecord[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfMessagingRecord"/>
+		</service>
+		<service name="ParticipantRegister" type="" provider="java:RPC"
+		style="rpc" use="encoded">
+		<parameter name="scope" value="Request"/>
+		<parameter name="className" value="au.com.apir.spinwebservice.ParticipantRegisterBean"/>
+		<parameter name="allowedMethods" value="lookupAllParticipantRecords, lookupParticipantRecordByPRI"/>
+		<namespace>http://spinwebservice.apir.com.au</namespace>
+		<typeMapping xmlns:ns3="http://spinwebservice.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns3:ParticipantRecord"
+		languageSpecificType="java:au.com.apir.spinwebservice.ParticipantRecord"
+		serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" name="ParticipantRecord"/>
+		<typeMapping xmlns:ns4="http://spinwebservice.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns4:ArrayOfParticipantRecord"
+		languageSpecificType="java:au.com.apir.spinwebservice.ParticipantRecord[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfParticipantRecord"/>
+		<typeMapping xmlns:ns5="http://spinwebservice.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns5:ArrayOfString"
+		languageSpecificType="java:java.lang.String[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfString"/>
+		</service>
+	-->
+
+	<service name="SurchargeRegister" type="" provider="java:RPC"
+		style="rpc" use="encoded">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.spinwebservice.SurchargeRegisterBean" />
+		<parameter name="allowedMethods"
+			value="lookupSurchargeRecordBySPIN" />
+		<namespace>http://spinwebservice.apir.com.au</namespace>
+		<typeMapping xmlns:ns6="http://spinwebservice.apir.com.au"
+			encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			qname="ns6:SurchargeRecord"
+			languageSpecificType="java:au.com.apir.spinwebservice.SurchargeRecord"
+			serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+			deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+			name="SurchargeRecord" />
+		<typeMapping xmlns:ns7="http://spinwebservice.apir.com.au"
+			encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			qname="ns7:ArrayOfSurchargeRecord"
+			languageSpecificType="java:au.com.apir.spinwebservice.SurchargeRecord[]"
+			serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+			deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory"
+			name="ArrayOfSurchargeRecord" />
+	</service>
+<!-- 
+	<service name="ManagedFundBasicPackage" provider="java:RPC" style="wrapped" use="literal">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.webservice.ManagedFundDataServiceBean" />
+		<parameter name="allowedMethods"
+			value="lookupManagedFundBasicRecordByCode" />
+		<namespace>http://webservice.apir.com.au</namespace>
+		<beanMapping qname="ns1:ADSManagedFundBasicRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ADSManagedFundBasicRecord"/>
+	</service>
+	<service name="ManagedFundPremiumPackage" provider="java:RPC" style="wrapped" use="literal">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.webservice.ManagedFundDataServiceBean" />
+		<parameter name="allowedMethods"
+			value="lookupManagedFundBasicRecordByCode,lookupManagedFundRecordByCode" />
+		<namespace>http://webservice.apir.com.au</namespace>
+		<beanMapping qname="ns1:ADSManagedFundBasicRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ADSManagedFundBasicRecord"/>
+    	<beanMapping qname="ns1:ADSManagedFundRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ADSManagedFundRecord"/>
+	</service>
+
+	<service name="SuperannuationBasicPackage" provider="java:RPC" style="wrapped" use="literal">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.webservice.SuperannuationDataServiceBean" />
+		<parameter name="allowedMethods"
+			value="lookupSuperannuationBasicRecordByCode" />
+		<namespace>http://webservice.apir.com.au</namespace>
+		<beanMapping qname="ns1:ADSSuperannuationBasicRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ADSSuperannuationBasicRecord"/>
+	</service>
+
+	<service name="SuperannuationPremiumPackage" provider="java:RPC"
+		style="wrapped" use="literal">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.webservice.SuperannuationDataServiceBean" />
+		<parameter name="allowedMethods"
+			value="lookupSuperannuationBasicRecordByCode,lookupSuperannuationRecordByCode" />
+		<namespace>http://webservice.apir.com.au</namespace>
+		<beanMapping qname="ns1:ADSSuperannuationBasicRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ADSSuperannuationBasicRecord"/>
+    	<beanMapping qname="ns1:ADSSuperannuationRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ADSSuperannuationRecord"/>
+	</service>
+	
+-->	
+
+	<service name="DomaComRegistration" provider="java:RPC" style="wrapped" use="literal">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.webservice.DomaComRegistrationServiceBean" />
+		<parameter name="allowedMethods"
+			value="registerDomaCom" />
+		<namespace>http://webservice.apir.com.au</namespace>
+		<beanMapping qname="ns1:DomaComResponseRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.webservice.DomaComResponseRecord"/>
+	</service>
+	
+	<service name="ManagedFundService" provider="java:RPC" style="wrapped" use="literal">
+		<parameter name="scope" value="Request" />
+		<parameter name="className"
+			value="au.com.apir.webservice.ManagedFundWebServiceBean" />
+		<parameter name="allowedMethods"
+			value="lookupManagedFundRecordByCode" />
+		<namespace>http://webservice.apir.com.au</namespace>
+		<beanMapping qname="ns1:ManagedFundRecord" xmlns:ns1="http://webservice.apir.com.au"
+    		languageSpecificType="java:au.com.apir.directory.flat.ManagedFundRecord"/>
+	</service>
+
+	<!-- 
+    <service name="ProductDirectory" provider="java:RPC">
+        <parameter name="scope" value="Request"/>
+        <parameter name="className" value="au.com.apir.directory.flat.FlatProductDirectory"/>
+        <parameter name="allowedMethods" value="
+		lookupInvestmentFundProductByIdentifyingCode,
+		lookupInvestmentFundProductByIsin,
+		lookupInvestmentFundProductsByName,
+		lookupInvestmentFundProductsByWrap,
+		lookupInvestmentFundProductsUnderOrganisation
+		"/>
+        <namespace>http://directory.apir.com.au</namespace>
+        <typeMapping xmlns:ns1="http://directory.apir.com.au"
+            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+            qname="ns1:InvestmentFundProductDetailsRecord"
+            languageSpecificType="java:au.com.apir.directory.flat.FlatInvestmentFundProductDetailsRecord"
+            serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+            deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" name="InvestmentFundProductDetailsRecord"/>
+		<typeMapping xmlns:ns2="http://directory.apir.com.au"       
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns2:InvestmentFundProductListing"
+		languageSpecificType="java:au.com.apir.directory.flat.FlatInvestmentFundProductListingRecord[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="InvestmentFundProductListing"/>       
+		<typeMapping xmlns:ns3="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns3:ArrayOfContactRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.ContactFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfContactRecord"/>
+		<typeMapping xmlns:ns4="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns4:ArrayOfAddressRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.AddressFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfAddressRecord"/>
+		<typeMapping xmlns:ns5="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns5:ArrayOfBankingRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.BankingFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfBankingRecord"/>
+		<typeMapping xmlns:ns6="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns6:ArrayOfBusinessRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.BusinessFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfBusinessRecord"/>
+		<typeMapping xmlns:ns7="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns7:ArrayOfDocumentationRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.DocumentationFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfDocumentationRecord"/>
+		<typeMapping xmlns:ns8="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns8:ArrayOfIdentificationRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.IdentificationFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfIdentificationRecord"/>
+		<typeMapping xmlns:ns9="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns9:ArrayOfTrainingRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.TrainingFragment[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfTrainingRecord"/>
+        <typeMapping xmlns:ns10="http://directory.apir.com.au"
+            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+            qname="ns10:ArrayOfString"
+            languageSpecificType="java:java.lang.String[]"
+            serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+            deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfString"/>
+		<typeMapping xmlns:ns12="http://directory.apir.com.au"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns12:RelationshipRecord"
+		languageSpecificType="java:au.com.apir.directory.flat.FlatRelationshipRecord[]"
+		serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" name="ArrayOfRelationshipRecord"/>
+		<typeMapping xmlns:ns13="http://directory.apir.com.au"       
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+		qname="ns13:DocumentationRecord"
+		languageSpecificType="java:au.com.apir.directory.fragment.DocumentationFragment"
+		serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" name="DocumentationRecord"/>
+		</service>
+	-->
+</deployment>
