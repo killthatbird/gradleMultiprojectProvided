@@ -10,6 +10,9 @@ allprojects {
 }
 
 subprojects {
+   repositories {
+        mavenCentral()
+    }
 }
 
 // Define the dependencies between the projects
@@ -18,10 +21,7 @@ project(':ace2') {
 	      provided
 	}
 	
-    repositories {
-        mavenCentral()
-    }
- 	dependencies {
+  	dependencies {
 	    compile('org.apache.poi:poi:3.11')
 	    compile('org.apache.logging.log4j:log4j-slf4j-impl:2.2')
 		compile('org.apache.logging.log4j:log4j-api:2.2')
